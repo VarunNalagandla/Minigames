@@ -1,0 +1,29 @@
+.cf-rules-container {
+  padding: 40px;
+  text-align: center;
+}
+.cf-rules-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+.cf-rules-list {
+  text-align: left;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+.cf-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cf-back-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+.cf-start-btn {
+  background-color: #4caf50;
+  color: #fff;
+}

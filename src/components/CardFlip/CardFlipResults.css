@@ -1,0 +1,50 @@
+.cf-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f7f9fc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.cf-results-container h1 {
+  font-size: 2.5rem;
+  color: #2e3a59;
+  margin-bottom: 40px;
+}
+
+.cf-play-btn,
+.cf-back-btn {
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background-color 0.3s;
+}
+
+.cf-play-btn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.cf-play-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.cf-back-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.cf-back-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}

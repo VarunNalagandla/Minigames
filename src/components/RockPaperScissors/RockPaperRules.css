@@ -1,0 +1,144 @@
+/* Base Styles */
+.rpsrule-bg-container {
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f0f4f8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.rpsrule-back-button {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: #333;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+
+.rpsrule-back-icon {
+  margin-right: 6px;
+  font-size: 1.2rem;
+}
+
+.rpsrule-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 16px;
+}
+
+.rpsrule-diagram {
+  margin: 20px 0;
+}
+
+.rpsrule-diagram-image {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.rpsrule-heading {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.rpsrule-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0 auto 20px;
+  text-align: left;
+  max-width: 700px;
+}
+
+.rpsrule-list li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.rpsrule-won {
+  color: green;
+  font-weight: bold;
+}
+
+.rpsrule-draw {
+  color: #555;
+  font-weight: bold;
+}
+
+.rpsrule-lose {
+  color: red;
+  font-weight: bold;
+}
+
+.rpsrule-start-button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.rpsrule-start-button:hover {
+  background-color: #2563eb;
+}
+
+/* Responsive Media Queries */
+@media screen and (max-width: 768px) {
+  .rpsrule-title {
+    font-size: 1.75rem;
+  }
+
+  .rpsrule-heading {
+    font-size: 1.3rem;
+  }
+
+  .rpsrule-list li {
+    font-size: 0.95rem;
+  }
+
+  .rpsrule-start-button {
+    width: 100%;
+  }
+
+  .rpsrule-diagram-image {
+    max-width: 90%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .rpsrule-title {
+    font-size: 1.5rem;
+  }
+
+  .rpsrule-heading {
+    font-size: 1.1rem;
+  }
+
+  .rpsrule-list {
+    padding-left: 16px;
+  }
+
+  .rpsrule-list li {
+    font-size: 0.9rem;
+  }
+
+  .rpsrule-start-button {
+    padding: 10px 18px;
+    font-size: 0.95rem;
+  }
+}

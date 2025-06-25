@@ -1,0 +1,94 @@
+.emo-app-container {
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(
+    to bottom right,
+    #9796f0 0.5%,
+    #fbc7d4 150%
+  );
+  min-height: 100vh;
+}
+
+.emo-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.emo-list-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: auto;
+  padding: 0px;
+  max-width: 1000px;
+}
+
+.emo-top-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.emo-back-button,
+.emo-rules-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.emo-back-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.emo-rules-button {
+  margin-left: 20px;
+  background-color: #1976d2;
+  color: white;
+}
+
+.emo-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.emo-popup-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+}
+
+.emo-popup-heading {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.emo-popup-list {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.emo-popup-close-button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

@@ -1,0 +1,113 @@
+.emo-rules-container {
+  background: linear-gradient(to bottom right, #9796f0, #fbc7d4);
+  min-height: 100vh;
+  padding: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.emo-back-button-top {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: #000;
+  cursor: pointer;
+}
+
+.emo-rules-card {
+  display: flex;
+  background-color: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 80px auto;
+  gap: 40px;
+  align-items: center;
+  border: 2px solid #0080ff;
+}
+
+.emo-rules-image-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.emo-rules-image {
+  max-width: 250px;
+  height: auto;
+}
+
+.emo-rules-title {
+  font-size: 28px;
+  margin-top: 20px;
+  color: #333;
+}
+
+.emo-rules-text-section {
+  flex: 2;
+  text-align: left;
+}
+
+.emo-rules-heading {
+  font-size: 24px;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+.emo-rules-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 30px;
+}
+
+.emo-rules-list li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.emo-start-button {
+  padding: 10px 20px;
+  background-color: #2d3748;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.emo-start-button:hover {
+  background-color: #1a202c;
+}
+
+@media screen and (max-width: 768px) {
+  .emo-rules-card {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .emo-rules-image {
+    max-width: 180px;
+  }
+
+  .emo-rules-title {
+    font-size: 22px;
+  }
+
+  .emo-rules-heading {
+    font-size: 20px;
+  }
+
+  .emo-start-button {
+    width: 100%;
+  }
+}

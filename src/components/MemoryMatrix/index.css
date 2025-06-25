@@ -1,0 +1,141 @@
+/* General container */
+.game-playing-view,
+.game-results-view {
+  font-family: 'Roboto', sans-serif;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Header buttons */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.back-button,
+.rules-button,
+.play-again-button {
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.back-button:hover,
+.rules-button:hover,
+.play-again-button:hover {
+  background-color: #2563eb;
+}
+
+/* Game info */
+.game-info {
+  margin-bottom: 20px;
+}
+
+/* Grid styles */
+.game-grid {
+  display: grid;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Tile buttons */
+.tile {
+  width: 60px;
+  height: 60px;
+  background-color: #e0e0e0;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease-in-out,
+    transform 0.2s ease;
+}
+
+.tile:hover {
+  transform: scale(1.05);
+}
+
+.tile.showing {
+  background-color: #3b82f6;
+}
+
+.tile.correct {
+  background-color: #10b981;
+}
+
+.tile.wrong {
+  background-color: #ef4444;
+}
+
+/* Rules popup */
+.rules-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.rules-popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.rules-popup-content h3 {
+  margin-top: 0;
+}
+
+.rules-popup-content button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* Game results */
+.progress-container {
+  width: 100%;
+  height: 24px;
+  background-color: #e5e7eb;
+  border-radius: 12px;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #10b981;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: width 0.5s ease-in-out;
+}
+
+.result-message {
+  font-size: 16px;
+  margin: 20px 0;
+}
