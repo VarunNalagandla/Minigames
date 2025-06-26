@@ -1,0 +1,164 @@
+/* Root container */
+.game-playing-view {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  background-color: #f9faff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.game-playing-view h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.game-playing-view p {
+  font-size: 1.2rem;
+  color: #777;
+}
+
+/* Header buttons */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.back-button,
+.rules-button {
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover,
+.rules-button:hover {
+  background-color: #3f51b5;
+}
+
+/* Game info */
+.game-info h2 {
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+  color: #444;
+}
+
+.game-info h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Grid styling */
+.game-grid {
+  display: grid;
+  gap: 10px;
+  margin: 2rem auto;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+/* Tiles */
+.tile {
+  width: 60px;
+  height: 60px;
+  background-color: #e0e0e0;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+}
+
+.tile:disabled {
+  cursor: default;
+}
+
+/* Showing pattern */
+.tile.showing {
+  background-color: #4caf50;
+  border-color: #388e3c;
+}
+
+/* Correct guess */
+.tile.correct {
+  background-color: #81c784;
+  border-color: #388e3c;
+}
+
+/* Wrong guess */
+.tile.wrong {
+  background-color: #ef5350;
+  border-color: #c62828;
+}
+
+/* Rules popup */
+.rules-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.rules-popup-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.rules-popup-content h3 {
+  margin-top: 0;
+  color: #222;
+}
+
+.rules-popup-content ul {
+  padding-left: 1.2rem;
+  color: #555;
+  font-size: 1rem;
+}
+
+.rules-popup-content img {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.rules-popup-content button {
+  margin-top: 1rem;
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  display: block;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.rules-popup-content button:hover {
+  background-color: #3f51b5;
+}

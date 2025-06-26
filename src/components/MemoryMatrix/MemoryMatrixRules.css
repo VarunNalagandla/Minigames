@@ -1,0 +1,68 @@
+.game-rules-view {
+  padding: 32px;
+  color: #fff;
+  background-color: #0f172a;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  color: #60a5fa;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.back-icon {
+  font-size: 20px;
+}
+
+.main-heading {
+  font-size: 32px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.rules-image {
+  display: block;
+  margin: 0 auto 24px;
+  max-width: 300px;
+}
+
+.rules-heading {
+  font-size: 24px;
+  margin: 24px 0 12px;
+  text-align: center;
+}
+
+.rules-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.rules-list {
+  flex: 1;
+  min-width: 300px;
+  list-style-type: disc;
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+.start-button {
+  display: block;
+  margin: 32px auto 0;
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #3b82f6;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}

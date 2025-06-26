@@ -10,7 +10,7 @@ class RockPaperRules extends React.Component {
 
   handleStartPlaying = () => {
     const {history} = this.props
-    history.push('/rps/play')
+    history.push('/rock-paper-scissor/play')
   }
 
   render() {
@@ -40,40 +40,55 @@ class RockPaperRules extends React.Component {
         <h2 className="rpsrule-heading">Rules</h2>
 
         <ul className="rpsrule-list">
-          <li>The game result should be based on user and opponent choices</li>
           <li>
-            Rock vs Rock → <span className="rpsrule-draw">IT IS DRAW</span>
+            The game result should be based on user and user opponent choices
           </li>
           <li>
-            Paper vs Rock → <span className="rpsrule-won">YOU WON</span>
+            When the user choice is rock and his opponent choice is rock then
+            the result will be <span className="rpsrule-draw">IT IS DRAW</span>
           </li>
           <li>
-            Scissor vs Rock → <span className="rpsrule-lose">YOU LOSE</span>
+            When the user choice is paper and his opponent choice is rock then
+            the result will be <span className="rpsrule-won">YOU WON</span>
           </li>
           <li>
-            Paper vs Paper → <span className="rpsrule-draw">IT IS DRAW</span>
+            When the user choice is a scissor and his opponent choice is rock
+            then the result will be{' '}
+            <span className="rpsrule-lose">YOU LOSE</span>
           </li>
           <li>
-            Scissors vs Paper → <span className="rpsrule-won">YOU WON</span>
+            When the user choice is paper and his opponent choice is paper then
+            the result will be <span className="rpsrule-draw">IT IS DRAW</span>
           </li>
           <li>
-            Rock vs Scissors → <span className="rpsrule-won">YOU WON</span>
+            When the user choice is scissors and his opponent choice is paper
+            then the result will be <span className="rpsrule-won">YOU WON</span>
           </li>
           <li>
-            Paper vs Scissors → <span className="rpsrule-lose">YOU LOSE</span>
+            When the user choice is rock and his opponent choice is scissors
+            then the result will be <span className="rpsrule-won">YOU WON</span>
           </li>
           <li>
-            Scissors vs Scissors →{' '}
+            When the user choice is paper and his opponent choice is scissors
+            then the result will be{' '}
+            <span className="rpsrule-lose">YOU LOSE</span>
+          </li>
+          <li>
+            When the user choice is scissors and his opponent choice is scissors
+            then the result will be{' '}
             <span className="rpsrule-draw">IT IS DRAW</span>
           </li>
           <li>
-            <span className="rpsrule-won">YOU WON</span> → +1 score
+            When the result is <span className="rpsrule-won">YOU WON</span>,
+            then the count of the score should be incremented by 1
           </li>
           <li>
-            <span className="rpsrule-draw">IT IS DRAW</span> → 0 score
+            When the result is <span className="rpsrule-draw">IT IS DRAW</span>,
+            then the count of the score should be the same
           </li>
           <li>
-            <span className="rpsrule-lose">YOU LOSE</span> → -1 score
+            When the result is <span className="rpsrule-lose">YOU LOSE</span>,
+            then the count of the score should be decremented by 1
           </li>
         </ul>
 

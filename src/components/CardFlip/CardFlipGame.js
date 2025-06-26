@@ -56,106 +56,199 @@ const cardsData = [
 ]
 
 function shuffle(array) {
-  return array
-    .concat()
+  return [...array, ...array]
+    .map((item, idx) => ({
+      ...item,
+      id: idx + 1,
+      flipped: false,
+      matched: false,
+    }))
     .sort(() => Math.random() - 0.5)
-    .map((item, idx) => ({...item, id: idx, flipped: false, matched: false}))
 }
 
 class CardFlipGame extends React.Component {
   state = {
-    cards: shuffle([...cardsData, ...cardsData]),
+    cards: shuffle(cardsData),
     firstChoice: null,
     secondChoice: null,
     disabled: false,
+    score: 0,
+    flips: 0,
+    timeLeft: 120,
+    showRules: false,
+  }
+
+  componentDidMount() {
+    this.timerId = setInterval(() => {
+      this.setState(
+        prev => ({timeLeft: prev.timeLeft - 1}),
+        () => {
+          const {timeLeft} = this.state
+          const {history} = this.props
+          if (timeLeft === 0) {
+            clearInterval(this.timerId)
+            history.push({
+              pathname: '/card-flip-memory-game/results',
+              state: {won: false},
+            })
+          }
+        },
+      )
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerId)
+  }
+
+  toggleRulesModal = () => {
+    this.setState(prev => ({showRules: !prev.showRules}))
   }
 
   handleCardClick = card => {
-    const {firstChoice, cards, disabled} = this.state
+    const {firstChoice, secondChoice, disabled, cards, flips} = this.state
+
     if (disabled || card.flipped || card.matched) return
+    if (firstChoice && firstChoice.id === card.id) return
 
     const updatedCards = cards.map(c =>
       c.id === card.id ? {...c, flipped: true} : c,
     )
+    const clickedCard = updatedCards.find(c => c.id === card.id)
 
-    this.setState({cards: updatedCards}, () => {
-      if (!firstChoice) {
-        this.setState({firstChoice: card})
-      } else {
-        this.setState({secondChoice: card, disabled: true}, this.checkMatch)
-      }
-    })
+    if (!firstChoice) {
+      this.setState({
+        cards: updatedCards,
+        firstChoice: clickedCard,
+      })
+    } else if (!secondChoice) {
+      this.setState(
+        {
+          cards: updatedCards,
+          secondChoice: clickedCard,
+          disabled: true,
+          flips: flips + 1, // ✅ Increment here immediately when second card is chosen
+        },
+        this.checkMatch,
+      )
+    }
   }
 
   checkMatch = () => {
-    const {firstChoice, secondChoice, cards} = this.state
-    if (firstChoice.name === secondChoice.name) {
-      const updatedCards = cards.map(c =>
-        c.name === firstChoice.name ? {...c, matched: true} : c,
+    const {firstChoice, secondChoice, cards, score} = this.state
+    const isMatch = firstChoice.name === secondChoice.name
+
+    if (isMatch) {
+      const updated = cards.map(card =>
+        card.name === firstChoice.name ? {...card, matched: true} : card,
       )
-      this.setState({cards: updatedCards}, this.resetTurn)
+      this.setState(
+        {
+          cards: updated,
+          score: score + 1,
+        },
+        this.resetTurn,
+      )
     } else {
       setTimeout(() => {
-        const updatedCards = cards.map(c =>
-          c.id === firstChoice.id || c.id === secondChoice.id
-            ? {...c, flipped: false}
-            : c,
+        const reverted = cards.map(card =>
+          card.id === firstChoice.id || card.id === secondChoice.id
+            ? {...card, flipped: false}
+            : card,
         )
-        this.setState({cards: updatedCards}, this.resetTurn)
-      }, 1000)
+        this.setState(
+          {
+            cards: reverted,
+          },
+          this.resetTurn,
+        )
+      }, 2000)
     }
   }
 
   resetTurn = () => {
-    const {cards} = this.state
-    const allMatched = cards.every(c => c.matched)
-    this.setState(
-      {
-        firstChoice: null,
-        secondChoice: null,
-        disabled: false,
-      },
-      () => {
-        if (allMatched) {
-          const {history} = this.props
-          history.push('/card-flip/results')
-        }
-      },
-    )
+    const {cards, flips} = this.state
+    const {history} = this.props
+    const allMatched = cards.every(card => card.matched)
+
+    if (allMatched) {
+      clearInterval(this.timerId)
+      history.push({
+        pathname: '/card-flip-memory-game/results',
+        state: {won: true, flips},
+      })
+    } else {
+      this.setState({firstChoice: null, secondChoice: null, disabled: false})
+    }
   }
 
   render() {
-    const {cards} = this.state
-    const {history} = this.props
-    const matches = cards.filter(c => c.matched).length / 2
+    const {cards, score, flips, timeLeft, showRules} = this.state
+    const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0')
+    const seconds = String(timeLeft % 60).padStart(2, '0')
 
     return (
       <div className="cf-game-container">
-        <button
-          type="button"
-          className="cf-home-btn"
-          onClick={() => history.push('/')}
-        >
-          ← Home
+        <h1>Card-Flip Memory Game</h1>
+        <button type="button" onClick={this.toggleRulesModal}>
+          Rules
         </button>
-        <h2 className="cf-score">Matches: {matches}</h2>
-        <div className="cf-grid">
+        <p>Card flip count - {flips}</p>
+        <p>Score - {score}</p>
+        <p>
+          {minutes}:{seconds}
+        </p>
+
+        <ul className="cf-grid">
           {cards.map(card => (
-            <div
-              key={card.id}
-              role="button"
-              tabIndex={0}
-              className={`cf-card ${card.flipped ? 'flipped' : ''}`}
-              onClick={() => this.handleCardClick(card)}
-              onKeyDown={e => e.key === 'Enter' && this.handleCardClick(card)}
-            >
-              <div className="cf-front" />
-              <div className="cf-back">
-                <img src={card.image} alt={card.name} />
+            <li key={card.id}>
+              <button
+                type="button"
+                data-testid={card.name}
+                className={`cf-card ${card.flipped ? 'flipped' : ''}`}
+                onClick={() => this.handleCardClick(card)}
+              >
+                <div className="cf-card-inner">
+                  <div className="cf-front" />
+                  <div className="cf-back">
+                    {card.flipped && (
+                      <img
+                        src={card.image}
+                        alt={card.name}
+                        data-testid={`image-${card.name}`}
+                      />
+                    )}
+                  </div>
+                </div>
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {showRules && (
+          <div className="rules-overlay">
+            <div className="rules-modal">
+              <button
+                type="button"
+                className="close-btn"
+                onClick={this.toggleRulesModal}
+              >
+                ×
+              </button>
+              <h2>Rules</h2>
+              <div className="rules-content">
+                <ul>
+                  <li>Cards are shuffled and face down.</li>
+                  <li>Timer starts from 2 minutes.</li>
+                  <li>Find matching pairs by flipping two cards.</li>
+                  <li>If matched, they stay face up.</li>
+                  <li>If not, they flip back after 2 seconds.</li>
+                  <li>Match all before time runs out to win.</li>
+                </ul>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
     )
   }

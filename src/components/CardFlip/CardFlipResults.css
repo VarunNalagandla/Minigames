@@ -1,50 +1,102 @@
 .cf-results-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f7f9fc;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px 20px;
+  max-width: 600px;
+  margin: 0 auto;
   text-align: center;
-  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .cf-results-container h1 {
-  font-size: 2.5rem;
-  color: #2e3a59;
-  margin-bottom: 40px;
+  font-size: 36px;
+  color: #212529;
+  margin-bottom: 12px;
+}
+
+.cf-results-container h2 {
+  font-size: 20px;
+  color: #495057;
+  margin-bottom: 24px;
+}
+
+.cf-results-container p {
+  font-size: 18px;
+  color: #343a40;
+  margin-top: 12px;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.cf-results-container img {
+  width: 100px;
+  height: auto;
+  margin: 20px 0;
 }
 
 .cf-play-btn,
-.cf-back-btn {
-  font-size: 1.2rem;
-  padding: 12px 24px;
-  margin: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition:
-    transform 0.2s,
-    background-color 0.3s;
-}
-
-.cf-play-btn {
+.cf-back-btn,
+.cf-results-container button {
+  display: inline-block;
   background-color: #28a745;
   color: #fff;
+  padding: 12px 24px;
+  margin: 10px 8px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  min-width: 120px;
 }
 
-.cf-play-btn:hover {
+.cf-back-btn,
+.cf-results-container button:last-of-type {
+  background-color: #6c757d;
+}
+
+.cf-play-btn:hover,
+.cf-results-container button:first-of-type:hover {
   background-color: #218838;
-  transform: scale(1.05);
+  transform: translateY(-2px);
 }
 
-.cf-back-btn {
-  background-color: #007bff;
-  color: #fff;
+.cf-back-btn:hover,
+.cf-results-container button:last-of-type:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
 }
 
-.cf-back-btn:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
+@media screen and (max-width: 600px) {
+  .cf-results-container {
+    padding: 24px 16px;
+  }
+
+  .cf-results-container h1 {
+    font-size: 28px;
+  }
+
+  .cf-results-container h2 {
+    font-size: 18px;
+  }
+
+  .cf-results-container p {
+    font-size: 16px;
+  }
+
+  .cf-results-container img {
+    width: 80px;
+  }
+
+  .cf-play-btn,
+  .cf-back-btn,
+  .cf-results-container button {
+    font-size: 14px;
+    padding: 10px 18px;
+    min-width: 100px;
+  }
 }

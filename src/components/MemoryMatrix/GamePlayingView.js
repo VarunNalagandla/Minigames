@@ -1,18 +1,21 @@
 import React from 'react'
-import './index.css'
+import './GamePlayingView.css'
 
 class GamePlayingView extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       showRules: false,
       gameState: 'waiting',
-      gridSize: Math.min(5, props.level + 2),
+      gridSize: 3,
       activeTiles: [],
       userSelections: [],
       score: 0,
     }
+
     this.hideTimeout = null
+    this.guessTimeout = null
   }
 
   componentDidMount() {
@@ -27,44 +30,51 @@ class GamePlayingView extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.hideTimeout) {
-      clearTimeout(this.hideTimeout)
-    }
+    clearTimeout(this.hideTimeout)
+    clearTimeout(this.guessTimeout)
   }
 
   generatePattern = () => {
     const {level, onGameEnd} = this.props
 
-    if (level > 4) {
-      onGameEnd(4)
+    if (level > 15) {
+      onGameEnd(level)
       return
     }
 
-    const gridSize = Math.min(5, level + 2)
-    const numTiles = Math.min(level + 1, gridSize * gridSize)
-    const tiles = []
+    const N = level + 1
+    const gridSize = Math.min(5, Math.max(3, Math.ceil(Math.sqrt(N))))
+    const totalTiles = gridSize * gridSize
 
-    while (tiles.length < numTiles) {
-      const randomTile = Math.floor(Math.random() * gridSize * gridSize)
-      if (!tiles.includes(randomTile)) {
-        tiles.push(randomTile)
-      }
+    const tiles = new Set()
+    while (tiles.size < N) {
+      tiles.add(Math.floor(Math.random() * totalTiles))
     }
+
+    const delay = N * 1000
 
     this.setState({
       gridSize,
-      activeTiles: tiles,
+      activeTiles: Array.from(tiles),
       gameState: 'showing',
       userSelections: [],
     })
 
     this.hideTimeout = setTimeout(() => {
       this.setState({gameState: 'guessing'})
-    }, 2000)
+
+      this.guessTimeout = setTimeout(() => {
+        const {userSelections} = this.state
+        if (userSelections.length === 0) {
+          this.setState({gameState: 'result'})
+          onGameEnd(level)
+        }
+      }, delay)
+    }, delay)
   }
 
   handleTileClick = tileIndex => {
-    const {gameState, userSelections, activeTiles} = this.state
+    const {gameState, userSelections, activeTiles, score} = this.state
     const {level, onGameEnd, setLevel} = this.props
 
     if (gameState !== 'guessing' || userSelections.includes(tileIndex)) return
@@ -73,25 +83,31 @@ class GamePlayingView extends React.Component {
     const isCorrect = activeTiles.includes(tileIndex)
 
     if (!isCorrect) {
+      clearTimeout(this.guessTimeout)
       this.setState({gameState: 'result', userSelections: newSelections})
-      setTimeout(() => onGameEnd(level), 1500)
+
+      const adjustedLevel =
+        level === 10 && userSelections.some(sel => activeTiles.includes(sel))
+          ? 9
+          : level
+
+      setTimeout(() => {
+        onGameEnd(adjustedLevel)
+      }, 1500)
       return
     }
 
     if (newSelections.length === activeTiles.length) {
+      clearTimeout(this.guessTimeout)
       this.setState(
-        prevState => ({
-          score: prevState.score + level * 10,
+        {
+          score: score + level * 10,
           gameState: 'result',
           userSelections: newSelections,
-        }),
+        },
         () => {
           setTimeout(() => {
-            if (level < 4) {
-              setLevel(level + 1)
-            } else {
-              onGameEnd(4)
-            }
+            setLevel(level + 1)
           }, 1500)
         },
       )
@@ -102,6 +118,7 @@ class GamePlayingView extends React.Component {
 
   renderTile = index => {
     const {gameState, activeTiles, userSelections} = this.state
+
     const isActive = activeTiles.includes(index)
     const isUserSelected = userSelections.includes(index)
     const isWrongGuess = gameState === 'result' && isUserSelected && !isActive
@@ -114,22 +131,30 @@ class GamePlayingView extends React.Component {
     if (isWrongGuess) className += ' wrong'
 
     return (
-      <button
-        key={index}
-        className={className}
-        onClick={() => this.handleTileClick(index)}
-        type="button"
-        aria-label={`Tile ${index + 1}`}
-      />
+      <li key={index}>
+        <button
+          className={className}
+          onClick={() => this.handleTileClick(index)}
+          type="button"
+          disabled={gameState === 'showing'}
+          aria-label={`Tile ${index + 1}`}
+          data-testid={isActive ? 'highlighted' : 'notHighlighted'}
+        />
+      </li>
     )
   }
 
   render() {
     const {onGoBack, level} = this.props
     const {showRules, score, gridSize} = this.state
+    const {gameState, userSelections, activeTiles} = this.state
+    const isGameWon =
+      gameState === 'result' && userSelections.length === activeTiles.length
 
     return (
       <div className="game-playing-view">
+        <h1>Memory Matrix</h1>
+
         <div className="game-header">
           <button className="back-button" onClick={onGoBack} type="button">
             ← Back
@@ -144,11 +169,17 @@ class GamePlayingView extends React.Component {
         </div>
 
         <div className="game-info">
-          <h2>Level: {level}</h2>
-          <h3>Score: {score}</h3>
+          {!isGameWon ? (
+            <>
+              <h2>Level: {level}</h2>
+              <h3>Score: {score}</h3>
+            </>
+          ) : (
+            <h2>Level - ({level + 1})</h2>
+          )}
         </div>
 
-        <div
+        <ul
           className="game-grid"
           style={{
             gridTemplateColumns: `repeat(${gridSize}, 60px)`,
@@ -158,16 +189,24 @@ class GamePlayingView extends React.Component {
           {Array.from({length: gridSize * gridSize}).map((_, index) =>
             this.renderTile(index),
           )}
-        </div>
+        </ul>
+
+        {gameState === 'result' && !isGameWon && <h1>Congratulations</h1>}
 
         {showRules && (
           <div className="rules-popup">
             <div className="rules-popup-content">
               <h3>Memory Matrix Rules</h3>
-              <p>
-                Memorize the highlighted tiles, then select them in any order.
-              </p>
-              <p>Each level increases difficulty. You have 4 levels total.</p>
+              <img src="memory.png" alt="memory matrix" />
+              <ul>
+                <li>1. Tiles are briefly highlighted.</li>
+                <li>2. Remember their positions.</li>
+                <li>3. Select the tiles in any order.</li>
+                <li>4. Each level gets harder.</li>
+                <li>5. Selecting a wrong tile ends the level.</li>
+                <li>6. Complete all highlighted tiles to advance.</li>
+                <li>7. The game ends at level 15.</li>
+              </ul>
               <button
                 onClick={() => this.setState({showRules: false})}
                 type="button"

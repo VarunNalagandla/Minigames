@@ -7,6 +7,7 @@ const WinOrLoseCard = props => {
   const {isWon, onClickPlayAgain, score} = props
   const imageUrl = isWon ? WON_IMAGE : LOSE_IMAGE
   const gameStatus = isWon ? 'You Won' : 'You Lose'
+  const altvalue = isWon ? 'won' : 'lose'
   const scoreLabel = isWon ? 'Best Score' : 'Score'
 
   return (
@@ -24,11 +25,7 @@ const WinOrLoseCard = props => {
         </button>
       </div>
       <div className="emo-image-section">
-        <img
-          className="emo-win-or-lose-image"
-          src={imageUrl}
-          alt="win or lose"
-        />
+        <img className="emo-win-or-lose-image" src={imageUrl} alt={altvalue} />
       </div>
     </div>
   )

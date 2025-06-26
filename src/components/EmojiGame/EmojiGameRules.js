@@ -1,11 +1,12 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
+import {BiArrowBack} from 'react-icons/bi'
 import './EmojiGameRules.css'
 
 class EmojiGameRules extends React.Component {
   onClickStart = () => {
     const {history} = this.props
-    history.push('/emoji/play')
+    history.push('/emoji-game/play')
   }
 
   onClickBack = () => {
@@ -20,8 +21,9 @@ class EmojiGameRules extends React.Component {
           type="button"
           className="emo-back-button-top"
           onClick={this.onClickBack}
+          aria-label="Go back"
         >
-          ← Back
+          <BiArrowBack size={24} />
         </button>
         <div className="emo-rules-card">
           <div className="emo-rules-image-section">

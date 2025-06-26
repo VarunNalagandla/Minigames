@@ -19,6 +19,7 @@ import MemoryMatrixGame from './components/MemoryMatrix/MemoryMatrixGame'
 import CardFlipRules from './components/CardFlip/CardFlipRules'
 import CardFlipGame from './components/CardFlip/CardFlipGame'
 import CardFlipResults from './components/CardFlip/CardFlipResults'
+
 import './App.css'
 
 class App extends React.Component {
@@ -27,18 +28,30 @@ class App extends React.Component {
       <Switch>
         <Route exact path="/" component={Home} />
         {/* Emoji Game */}
-        <Route exact path="/emoji" component={EmojiGameRules} />
-        <Route exact path="/emoji/play" component={EmojiGame} />
+        <Route exact path="/emoji-game" component={EmojiGameRules} />
+        <Route exact path="/emoji-game/play" component={EmojiGame} />
         {/* Rock Paper Scissors */}
-        <Route exact path="/rps" component={RockPaperRules} />
-        <Route exact path="/rps/play" component={RockPaperPlay} />
+        <Route exact path="/rock-paper-scissor" component={RockPaperRules} />
+        <Route
+          exact
+          path="/rock-paper-scissor/play"
+          component={RockPaperPlay}
+        />
         {/* Memory Matrix */}
-        <Route exact path="/matrix" component={MemoryMatrixRules} />
-        <Route exact path="/matrix/play" component={MemoryMatrixGame} />
-        {/* Card-Flip Memory */}
-        <Route exact path="/card-flip" component={CardFlipRules} />
-        <Route exact path="/card-flip/play" component={CardFlipGame} />
-        <Route exact path="/card-flip/results" component={CardFlipResults} />
+        <Route exact path="/memory-matrix" component={MemoryMatrixRules} />
+        <Route exact path="/memory-matrix/play" component={MemoryMatrixGame} />
+        {/* Card-Flip Memory Game */}
+        <Route exact path="/card-flip-memory-game" component={CardFlipRules} />
+        <Route
+          exact
+          path="/card-flip-memory-game/play"
+          component={CardFlipGame}
+        />
+        <Route
+          exact
+          path="/card-flip-memory-game/results"
+          component={CardFlipResults}
+        />
       </Switch>
     )
   }

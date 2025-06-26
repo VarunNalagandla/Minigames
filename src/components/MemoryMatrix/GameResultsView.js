@@ -1,41 +1,58 @@
 import React from 'react'
-import './index.css'
+import {Line} from 'rc-progress'
+import './GameResultsView.css'
 
 class GameResultsView extends React.Component {
   render() {
-    const {level, onGoBack, onPlayAgain} = this.props
-    const maxLevel = 4
+    const {level, onPlayAgain} = this.props
+    const maxLevel = 15
     const percentage = Math.min(100, (level / maxLevel) * 100)
 
-    let message
-    if (level === 4) {
-      message = "Amazing! You've mastered Memory Matrix!"
-    } else if (level === 3) {
-      message = "Great job! You're getting really good at this!"
-    } else if (level === 2) {
-      message = 'Good effort! Keep practicing to improve!'
-    } else {
-      message = "Nice try! You'll do better next time!"
-    }
+    const emojiAlts = [
+      'neutral face',
+      'grimacing face',
+      'slightly smiling face',
+      'grinning face with big eyes',
+      'grinning face with smiling eyes',
+      'beaming face with smiling eyes',
+      'grinning face',
+      'smiling face with sunglasses',
+    ]
+
+    const milestoneLabels = [1, 5, 10, 15]
 
     return (
-      <div className="game-results-view">
-        <button className="back-button" onClick={onGoBack} type="button">
-          ← Back
-        </button>
-
-        <h1>Game Complete!</h1>
-        <h2>You reached level {level}</h2>
-
-        <div className="progress-container">
-          <div className="progress-bar" style={{width: `${percentage}%`}}>
-            {percentage}%
+      <div className="results-container">
+        <div className="emoji-progress-wrapper">
+          <div className="emoji-row">
+            {emojiAlts.map(alt => (
+              <img
+                key={alt}
+                className="result-emoji"
+                src={`/${alt.replace(/\s+/g, '-')}.png`}
+                alt={alt}
+              />
+            ))}
+          </div>
+          <div className="progress-bar">
+            <Line
+              percent={percentage}
+              strokeWidth={10}
+              strokeColor="#3b82f6"
+              trailWidth={10}
+            />
+          </div>
+          <div className="milestone-labels">
+            {milestoneLabels.map(milestone => (
+              <p key={milestone} className="milestone-label">
+                Level {milestone}
+              </p>
+            ))}
           </div>
         </div>
 
-        <div className="result-message">
-          <p>{message}</p>
-        </div>
+        <h1 className="congrats-heading">Congratulations!</h1>
+        <h2 className="reached-level">You have reached level {level}</h2>
 
         <button
           className="play-again-button"

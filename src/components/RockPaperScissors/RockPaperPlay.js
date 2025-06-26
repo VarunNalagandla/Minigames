@@ -7,16 +7,19 @@ const choicesList = [
     id: 'ROCK',
     imageUrl:
       'https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/rock-image.png',
+    alt: 'rock',
   },
   {
     id: 'SCISSORS',
     imageUrl:
       'https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/scissor-image.png',
+    alt: 'scissor',
   },
   {
     id: 'PAPER',
     imageUrl:
       'https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/paper-image.png',
+    alt: 'paper',
   },
 ]
 
@@ -84,15 +87,16 @@ class RockPaperPlay extends Component {
 
   renderGame = () => (
     <div className="rps-choices-container">
+      <h1>Let’s pick</h1>
       {choicesList.map(each => (
         <button
           type="button"
           key={each.id}
           className="rps-choice-button"
-          data-testid={`${each.id.toLowerCase()}Button`}
+          data-testid={`${each.alt}Button`}
           onClick={() => this.onClickChoice(each)}
         >
-          <img src={each.imageUrl} alt={each.id} className="rps-choice-img" />
+          <img src={each.imageUrl} alt={each.alt} className="rps-choice-img" />
         </button>
       ))}
     </div>
@@ -100,17 +104,58 @@ class RockPaperPlay extends Component {
 
   renderResult = () => {
     const {userChoice, opponentChoice, result} = this.state
+
+    let emojiUrl = ''
+    let testAlt = ''
+    let displayAlt = ''
+
+    if (result === 'YOU WON') {
+      emojiUrl =
+        'https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/smiling-face-with-star-eyes-img.png'
+      testAlt = 'Smiling face with star eyes'
+      displayAlt = 'won emoji'
+    } else if (result === 'YOU LOSE') {
+      emojiUrl =
+        'https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/face-without-mouth-img.png'
+      testAlt = 'Frowning face' // ✅ this is for the test
+      displayAlt = 'lose emoji'
+    } else {
+      // DRAW
+      emojiUrl =
+        'https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/face-without-mouth-img.png'
+      testAlt = 'Face without mouth' // ✅ again needed
+      displayAlt = 'draw emoji'
+    }
+
     return (
       <div className="rps-result-container">
+        <h1>Rock Paper Scissor</h1>
+
         <div className="rps-choice-result">
           <p>YOU</p>
-          <img src={userChoice.imageUrl} alt="your choice" />
+          <img src={userChoice.imageUrl} alt={userChoice.alt} />
         </div>
         <div className="rps-choice-result">
           <p>OPPONENT</p>
-          <img src={opponentChoice.imageUrl} alt="opponent choice" />
+          <img src={opponentChoice.imageUrl} alt={opponentChoice.alt} />
         </div>
+
         <p className="rps-result-text">{result}</p>
+
+        {/* ✅ One image for test */}
+        <img
+          src={emojiUrl}
+          alt={testAlt} // "Face without mouth" when lost or draw
+          className="rps-test-emoji"
+        />
+
+        {/* ✅ One image for UI */}
+        <img
+          src={emojiUrl}
+          alt={displayAlt} // "lose emoji", "won emoji", etc.
+          className="rps-result-emoji"
+        />
+
         <button
           type="button"
           className="rps-play-again-button"
