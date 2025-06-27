@@ -1,9 +1,18 @@
 import {Component} from 'react'
 import {withRouter} from 'react-router-dom'
+import Modal from 'react-modal'
+import {CgClose} from 'react-icons/cg'
 import './EmojiGame.css'
 import EmojiCard from './EmojiCard'
 import NavBar from './NavBar'
 import WinOrLoseCard from './WinOrLoseCard'
+
+if (typeof document !== 'undefined') {
+  const root = document.getElementById('root') || document.createElement('div')
+  root.setAttribute('id', 'root')
+  document.body.appendChild(root)
+  Modal.setAppElement(root)
+}
 
 const emojisList = [
   {
@@ -153,16 +162,34 @@ class EmojiGame extends Component {
     }))
   }
 
-  renderRulesPopup = () => (
-    <div className="emo-popup-overlay">
-      <div className="emo-popup-content">
-        <h2 className="emo-popup-heading">Rules</h2>
-        <ul className="emo-popup-list">
+  renderRulesPopup = () => {
+    const {showRulesPopup} = this.state
+
+    return (
+      <Modal
+        isOpen={showRulesPopup}
+        onRequestClose={this.toggleRulesPopup}
+        className="emo-popup-content"
+        overlayClassName="emo-popup-overlay"
+      >
+        <div className="emo-modal-header">
+          <h2 className="emo-popup-heading">Rules</h2>
+          <button
+            type="button"
+            onClick={this.toggleRulesPopup}
+            className="emo-popup-close-button"
+            data-testid="close"
+            aria-label="Close"
+          >
+            <CgClose size={20} />
+          </button>
+        </div>
+        <ul className="emo-modal-list">
           <li>User should be able to see the list of Emojis</li>
           <li>
             When the user clicks any one of the Emoji for the first time, then
             the count of the score should be incremented by 1 and the List of
-            emoji cards should be shuffled.
+            emoji cards should be shuffled
           </li>
           <li>
             This process should be repeated every time the user clicks on an
@@ -174,28 +201,31 @@ class EmojiGame extends Component {
           </li>
           <li>
             When the user clicks on the same Emoji for the second time, then the
-            user will lose the game.
+            user will lose the game
           </li>
           <li>
             Once the game is over, the user will be redirected to the results
-            page.
+            page
           </li>
         </ul>
-        <button
-          type="button"
-          onClick={this.toggleRulesPopup}
-          className="emo-popup-close-button"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  )
+        <ul className="emo-modal-emojis">
+          {emojisList.map(emoji => (
+            <li key={emoji.id}>
+              <img
+                src={emoji.emojiUrl}
+                alt={emoji.emojiName}
+                className="emo-modal-emoji"
+              />
+            </li>
+          ))}
+        </ul>
+      </Modal>
+    )
+  }
 
   render() {
     const {clickedEmojisList, showRulesPopup} = this.state
     const {isGameInProgress, topScore} = this.state
-
     return (
       <div className="emo-app-container">
         <NavBar
@@ -222,7 +252,7 @@ class EmojiGame extends Component {
           </div>
           {isGameInProgress ? this.renderEmojisList() : this.renderScoreCard()}
         </div>
-        {showRulesPopup && this.renderRulesPopup()}
+        {showRulesPopup ? this.renderRulesPopup() : null}
       </div>
     )
   }

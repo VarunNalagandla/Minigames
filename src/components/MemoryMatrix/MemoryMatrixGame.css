@@ -1,0 +1,237 @@
+/* Global resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8fafc;
+  color: #1f2937;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Game layout */
+.game-playing-view {
+  padding: 24px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.back-button,
+.rules-button,
+.play-again-button,
+.close-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover,
+.rules-button:hover,
+.play-again-button:hover,
+.close-button:hover {
+  background-color: #2563eb;
+}
+
+.game-info {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Grid styling */
+.game-grid {
+  display: grid;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.tile {
+  width: 60px;
+  height: 60px;
+  background-color: #e5e7eb;
+  border: 2px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tile:hover {
+  background-color: #d1d5db;
+}
+
+.tile.showing {
+  background-color: #3b82f6;
+  border-color: #2563eb;
+}
+
+.tile.correct {
+  background-color: #22c55e;
+  border-color: #16a34a;
+}
+
+.tile.wrong {
+  background-color: #ef4444;
+  border-color: #b91c1c;
+}
+
+/* Results View */
+.game-results-view {
+  padding: 32px;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.emoji-progress-bar {
+  margin: 24px 0;
+}
+
+.emoji-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.emoji-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.progress-line {
+  height: 12px;
+  border-radius: 6px;
+}
+
+.levels-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.congrats-heading {
+  font-size: 28px;
+  margin-top: 24px;
+}
+
+.reached-level {
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+.play-again-button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.play-again-button:hover {
+  background-color: #2563eb;
+}
+
+/* Modal Styling */
+.rules-modal {
+  background-color: white;
+  padding: 24px;
+  max-width: 500px;
+  margin: auto;
+  border-radius: 12px;
+  position: relative;
+  outline: none;
+}
+
+.rules-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rules-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rules-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rules-close-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.rules-modal-content img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.rules-modal-content ul {
+  margin-top: 8px;
+  padding-left: 20px;
+}
+
+.rules-modal-content li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .tile {
+    width: 48px;
+    height: 48px;
+  }
+
+  .emoji-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .play-again-button,
+  .rules-button,
+  .back-button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .game-grid {
+    gap: 6px;
+  }
+}

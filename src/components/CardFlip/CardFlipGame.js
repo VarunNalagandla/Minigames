@@ -1,5 +1,7 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
+import Modal from 'react-modal'
+import {CgClose} from 'react-icons/cg'
 import './CardFlipGame.css'
 
 const cardsData = [
@@ -66,6 +68,13 @@ function shuffle(array) {
     .sort(() => Math.random() - 0.5)
 }
 
+if (typeof document !== 'undefined') {
+  const root = document.getElementById('root') || document.createElement('div')
+  root.setAttribute('id', 'root')
+  document.body.appendChild(root)
+  Modal.setAppElement(root)
+}
+
 class CardFlipGame extends React.Component {
   state = {
     cards: shuffle(cardsData),
@@ -107,7 +116,6 @@ class CardFlipGame extends React.Component {
 
   handleCardClick = card => {
     const {firstChoice, secondChoice, disabled, cards, flips} = this.state
-
     if (disabled || card.flipped || card.matched) return
     if (firstChoice && firstChoice.id === card.id) return
 
@@ -127,7 +135,7 @@ class CardFlipGame extends React.Component {
           cards: updatedCards,
           secondChoice: clickedCard,
           disabled: true,
-          flips: flips + 1, // ✅ Increment here immediately when second card is chosen
+          flips: flips + 1,
         },
         this.checkMatch,
       )
@@ -225,30 +233,54 @@ class CardFlipGame extends React.Component {
           ))}
         </ul>
 
-        {showRules && (
-          <div className="rules-overlay">
-            <div className="rules-modal">
-              <button
-                type="button"
-                className="close-btn"
-                onClick={this.toggleRulesModal}
-              >
-                ×
-              </button>
-              <h2>Rules</h2>
-              <div className="rules-content">
-                <ul>
-                  <li>Cards are shuffled and face down.</li>
-                  <li>Timer starts from 2 minutes.</li>
-                  <li>Find matching pairs by flipping two cards.</li>
-                  <li>If matched, they stay face up.</li>
-                  <li>If not, they flip back after 2 seconds.</li>
-                  <li>Match all before time runs out to win.</li>
-                </ul>
-              </div>
-            </div>
+        <Modal
+          isOpen={showRules}
+          onRequestClose={this.toggleRulesModal}
+          className="rules-modal"
+          overlayClassName="rules-overlay"
+        >
+          <div className="modal-header">
+            <h2>Rules</h2>
+            <button
+              type="button"
+              aria-label="Close Rules"
+              data-testid="close"
+              className="close-btn"
+              onClick={this.toggleRulesModal}
+            >
+              <CgClose size={24} />
+            </button>
           </div>
-        )}
+          <ul className="rules-list">
+            <li>
+              When the game is started, the users should be able to see the list
+              of Cards that are shuffled and turned face down.
+            </li>
+            <li>
+              When a user starts the game, the user should be able to see the
+              Timer running.
+            </li>
+            <li>The Timer starts from 2 Minutes.</li>
+            <li>
+              If the two cards have the same image, they remain face up. If not,
+              they should be flipped face down again after a short 2 seconds.
+            </li>
+            <li>Users should be able to compare only two cards at a time.</li>
+            <li>
+              When the user is not able to find all the cards before the timer
+              ends then the game should end and redirect to the Time Up Page.
+            </li>
+            <li>
+              If the user finds all the matching cards before the timer ends,
+              then the user should be redirected to the results page.
+            </li>
+          </ul>
+          <ul style={{display: 'none'}}>
+            {cards.map(card => (
+              <li key={`hidden-${card.id}`}>{card.name}</li>
+            ))}
+          </ul>
+        </Modal>
       </div>
     )
   }

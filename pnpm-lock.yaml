@@ -6,11 +6,11 @@ dependencies:
   chalk: 4.1.0
   enzyme: 3.11.0
   history: 5.0.1
-  rc-progress: 3.1.4_react-dom@17.0.1+react@17.0.1
+  rc-progress: 4.0.0_react-dom@17.0.1+react@17.0.1
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-icons: 4.3.1_react@17.0.1
-  react-modal: 3.14.3_react-dom@17.0.1+react@17.0.1
+  react-modal: 3.16.3_react-dom@17.0.1+react@17.0.1
   react-router-dom: 5.3.0_react@17.0.1
   reactjs-popup: 2.0.6_react-dom@17.0.1+react@17.0.1
 devDependencies:
@@ -11996,10 +11996,11 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-qqJBtEyVgS0ZmPGdCFPWJ3FreoqvG4MVQln/kCgF7Olq95IbOp0/BWyMwbdtn4VTvkM8Y7khCQ2Xgk/tcrCXig==
-  /rc-progress/3.1.4_react-dom@17.0.1+react@17.0.1:
+  /rc-progress/4.0.0_react-dom@17.0.1+react@17.0.1:
     dependencies:
       '@babel/runtime': 7.23.4
       classnames: 2.3.2
+      rc-util: 5.44.4_react-dom@17.0.1+react@17.0.1
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
     dev: false
@@ -12007,7 +12008,19 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     resolution:
-      integrity: sha512-XBAif08eunHssGeIdxMXOmRQRULdHaDdIFENQ578CMb4dyewahmmfJRyab+hw4KH4XssEzzYOkAInTLS7JJG+Q==
+      integrity: sha512-oofVMMafOCokIUIBnZLNcOZFsABaUw8PPrf1/y0ZBvKZNpOiu5h4AO9vv11Sw0p4Hb3D0yGWuEattcQGtNJ/aw==
+  /rc-util/5.44.4_react-dom@17.0.1+react@17.0.1:
+    dependencies:
+      '@babel/runtime': 7.23.4
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+      react-is: 18.2.0
+    dev: false
+    peerDependencies:
+      react: '>=16.9.0'
+      react-dom: '>=16.9.0'
+    resolution:
+      integrity: sha512-resueRJzmHG9Q6rI/DfK6Kdv9/Lfls05vzMs1Sk3M2P+3cJa+MakaZyWY8IPfehVuhPJFKrIY1IK4GqbiaiY5w==
   /react-app-polyfill/2.0.0:
     dependencies:
       core-js: 3.33.3
@@ -12089,7 +12102,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
-  /react-modal/3.14.3_react-dom@17.0.1+react@17.0.1:
+  /react-modal/3.16.3_react-dom@17.0.1+react@17.0.1:
     dependencies:
       exenv: 1.2.2
       prop-types: 15.8.1
@@ -12098,13 +12111,11 @@ packages:
       react-lifecycles-compat: 3.0.4
       warning: 4.0.3
     dev: false
-    engines:
-      node: '>=8'
     peerDependencies:
-      react: ^0.14.0 || ^15.0.0 || ^16 || ^17
-      react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17
+      react: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18 || ^19
+      react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18 || ^19
     resolution:
-      integrity: sha512-+C2KODVKyu20zHXPJxfOOcf571L1u/EpFlH+oS/3YDn8rgVE51QZuxuuIwabJ8ZFnOEHaD+r6XNjqwtxZnXO0g==
+      integrity: sha512-yCYRJB5YkeQDQlTt17WGAgFJ7jr2QYcWa1SHqZ3PluDmnKJ/7+tVU+E6uKyZ0nODaeEj+xCpK4LcSnKXLMC0Nw==
   /react-refresh/0.8.3:
     dev: true
     engines:
@@ -14975,11 +14986,11 @@ specifiers:
   lint-staged: 10.5.4
   npm-run-all: 4.1.5
   prettier: 2.2.1
-  rc-progress: 3.1.4
+  rc-progress: 4.0.0
   react: 17.0.1
   react-dom: 17.0.1
   react-icons: 4.3.1
-  react-modal: 3.14.3
+  react-modal: 3.16.3
   react-router-dom: 5.3.0
   react-scripts: 4.0.3
   reactjs-popup: 2.0.6

@@ -1,6 +1,15 @@
 import {Component} from 'react'
 import {withRouter} from 'react-router-dom'
+import Modal from 'react-modal'
+import {CgClose} from 'react-icons/cg'
 import './RockPaperPlay.css'
+
+if (typeof document !== 'undefined') {
+  const root = document.getElementById('root') || document.createElement('div')
+  root.setAttribute('id', 'root')
+  document.body.appendChild(root)
+  Modal.setAppElement(root)
+}
 
 const choicesList = [
   {
@@ -87,18 +96,24 @@ class RockPaperPlay extends Component {
 
   renderGame = () => (
     <div className="rps-choices-container">
-      <h1>Let’s pick</h1>
-      {choicesList.map(each => (
-        <button
-          type="button"
-          key={each.id}
-          className="rps-choice-button"
-          data-testid={`${each.alt}Button`}
-          onClick={() => this.onClickChoice(each)}
-        >
-          <img src={each.imageUrl} alt={each.alt} className="rps-choice-img" />
-        </button>
-      ))}
+      <h1 className="rps-subtitle">Let’s pick</h1>
+      <div className="rps-buttons-wrapper">
+        {choicesList.map(each => (
+          <button
+            key={each.id}
+            type="button"
+            className="rps-choice-button"
+            data-testid={`${each.alt}Button`}
+            onClick={() => this.onClickChoice(each)}
+          >
+            <img
+              src={each.imageUrl}
+              alt={each.alt}
+              className="rps-choice-img"
+            />
+          </button>
+        ))}
+      </div>
     </div>
   )
 
@@ -117,13 +132,12 @@ class RockPaperPlay extends Component {
     } else if (result === 'YOU LOSE') {
       emojiUrl =
         'https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/face-without-mouth-img.png'
-      testAlt = 'Frowning face' // ✅ this is for the test
+      testAlt = 'Frowning face'
       displayAlt = 'lose emoji'
     } else {
-      // DRAW
       emojiUrl =
         'https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/face-without-mouth-img.png'
-      testAlt = 'Face without mouth' // ✅ again needed
+      testAlt = 'Face without mouth'
       displayAlt = 'draw emoji'
     }
 
@@ -142,19 +156,8 @@ class RockPaperPlay extends Component {
 
         <p className="rps-result-text">{result}</p>
 
-        {/* ✅ One image for test */}
-        <img
-          src={emojiUrl}
-          alt={testAlt} // "Face without mouth" when lost or draw
-          className="rps-test-emoji"
-        />
-
-        {/* ✅ One image for UI */}
-        <img
-          src={emojiUrl}
-          alt={displayAlt} // "lose emoji", "won emoji", etc.
-          className="rps-result-emoji"
-        />
+        <img src={emojiUrl} alt={testAlt} className="rps-test-emoji" />
+        <img src={emojiUrl} alt={displayAlt} className="rps-result-emoji" />
 
         <button
           type="button"
@@ -167,96 +170,112 @@ class RockPaperPlay extends Component {
     )
   }
 
-  renderRules = () => (
-    <div className="rps-rules-popup">
-      <div className="rps-rules-container">
+  renderRulesModal = () => {
+    const {showRules} = this.state
+
+    return (
+      <Modal
+        isOpen={showRules}
+        onRequestClose={this.onClickCloseRules}
+        className="rps-modal"
+        overlayClassName="rps-modal-overlay"
+      >
         <button
           type="button"
+          data-testid="close"
           className="rps-close-button"
           onClick={this.onClickCloseRules}
+          aria-label="Close"
         >
-          ✕
+          <CgClose size={20} />
         </button>
-        <h1 className="rps-rules-heading">Rules</h1>
-        <div className="rps-rules-list">
-          <ul className="rps-rules-column">
-            <li>
-              Rock vs Rock → <span className="rps-draw">IT IS DRAW</span>
-            </li>
-            <li>
-              Paper vs Rock → <span className="rps-won">YOU WON</span>
-            </li>
-            <li>
-              Scissor vs Rock → <span className="rps-lose">YOU LOSE</span>
-            </li>
-            <li>
-              Paper vs Paper → <span className="rps-draw">IT IS DRAW</span>
-            </li>
-            <li>
-              Scissors vs Paper → <span className="rps-won">YOU WON</span>
-            </li>
-          </ul>
-          <ul className="rps-rules-column">
-            <li>
-              Rock vs Scissors → <span className="rps-won">YOU WON</span>
-            </li>
-            <li>
-              Paper vs Scissors → <span className="rps-lose">YOU LOSE</span>
-            </li>
-            <li>
-              Scissors vs Scissors →{' '}
-              <span className="rps-draw">IT IS DRAW</span>
-            </li>
-            <li>
-              <span className="rps-won">YOU WON</span> → +1 score
-            </li>
-            <li>
-              <span className="rps-draw">IT IS DRAW</span> → 0 score
-            </li>
-            <li>
-              <span className="rps-lose">YOU LOSE</span> → -1 score
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  )
+        <h1 className="rps-modal-heading">Rules</h1>
+        <ul className="rps-rules-ul">
+          <li>
+            The game result should be based on user and user opponent choices
+          </li>
+          <li>
+            When the user choice is rock and his opponent choice is rock then
+            the result will be IT IS DRAW
+          </li>
+          <li>
+            When the user choice is paper and his opponent choice is rock then
+            the result will be YOU WON
+          </li>
+          <li>
+            When the user choice is a scissor and his opponent choice is rock
+            then the result will be YOU LOSE
+          </li>
+          <li>
+            When the user choice is paper and his opponent choice is paper then
+            the result will be IT IS DRAW
+          </li>
+          <li>
+            When the user choice is scissors and his opponent choice is paper
+            then the result will be YOU WON
+          </li>
+          <li>
+            When the user choice is rock and his opponent choice is scissors
+            then the result will be YOU WON
+          </li>
+          <li>
+            When the user choice is paper and his opponent choice is scissors
+            then the result will be YOU LOSE
+          </li>
+          <li>
+            When the user choice is scissors and his opponent choice is scissors
+            then the result will be IT IS DRAW
+          </li>
+          <li>
+            When the result is YOU WON, then the count of the score should be
+            incremented by 1
+          </li>
+          <li>
+            When the result is IT IS DRAW, then the count of the score should be
+            the same
+          </li>
+          <li>
+            When the result is YOU LOSE, then the count of the score should be
+            decremented by 1
+          </li>
+        </ul>
+      </Modal>
+    )
+  }
 
   render() {
-    const {score, isGameOn, showRules} = this.state
+    const {score, isGameOn} = this.state
 
     return (
       <div className="rps-game-main-container">
-        {!showRules ? (
-          <>
-            <div className="rps-game-header">
-              <h1 className="rps-game-title">Rock Paper Scissors</h1>
-              <div className="rps-score-box">
-                <p className="rps-score-label">Score</p>
-                <p className="rps-score-value">{score}</p>
-              </div>
-            </div>
-            {isGameOn ? this.renderResult() : this.renderGame()}
-            <div className="rps-footer-buttons">
-              <button
-                type="button"
-                className="rps-rules-btn"
-                onClick={this.onClickShowRules}
-              >
-                RULES
-              </button>
-              <button
-                type="button"
-                className="rps-home-btn"
-                onClick={this.onClickBackToHome}
-              >
-                BACK
-              </button>
-            </div>
-          </>
-        ) : (
-          this.renderRules()
-        )}
+        <div className="rps-game-header">
+          <h1 className="rps-game-title">Rock Paper Scissors</h1>
+          <div className="rps-score-box">
+            <p className="rps-score-label">Score</p>
+            <p className="rps-score-value">{score}</p>
+          </div>
+        </div>
+
+        {isGameOn ? this.renderResult() : this.renderGame()}
+
+        <div className="rps-footer-buttons">
+          <button
+            type="button"
+            className="rps-rules-btn"
+            onClick={this.onClickShowRules}
+          >
+            RULES
+          </button>
+          <button
+            type="button"
+            className="rps-home-btn"
+            onClick={this.onClickBackToHome}
+          >
+            BACK
+          </button>
+        </div>
+
+        {this.renderRulesModal()}
       </div>
     )
   }
